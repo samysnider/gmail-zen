@@ -12,14 +12,14 @@ It's a personal project, built to make Gmail feel calm and focused.
 
 Gmail Zen keeps only what you use to read and write email. One centered column, generous space, no dividers, no labels or counters. Hierarchy comes from type (Inter, few sizes) rather than boxes.
 
-The palette is warm and neutral: an off-white page, near-black text, warm greys and no blue. A single orange marks what's new or what to act on: the unread dot, "Write", "Send", "Unsubscribe".
+The palette is warm and neutral: an off-white page, near-black text, warm greys and no blue. A single orange marks only what's new and the main action: the unread dot, "Write" and "Send".
 
 Depth comes from soft shadows and blur instead of lines. Motion is quick for everyday actions and slower for rare moments, like the writing sheet rising or the pastel light that appears when a new email arrives.
 
 ## What it changes
 
 **Inbox**
-- Hides the clutter: logo, help, settings, Gemini, upgrade button, apps grid, avatar, side panel, labels, checkboxes, stars, label chips, counters and footer.
+- Hides the clutter: logo, help, settings, Gemini, upgrade button, apps grid, avatar, side panel, labels, checkboxes, label chips, counters and footer.
 - A centered column with soft warm greys and Inter.
 - "Unread" shows an orange dot with your unread count, and the dot disappears when there's nothing to read.
 - When a new email arrives, the other emails blur for a moment so it stands alone, and a soft pastel sunlight rises from the bottom of the window like a small sunrise, then fades.

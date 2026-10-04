@@ -13,12 +13,13 @@
 
 :root {
   --cg-bg: #fdfdfc;        /* every page background */
-  --cg-hover: #f5f4f4;     /* row and button hover, search bar at rest */
+  --cg-hover: #f5f5f3;     /* row and button hover, search bar at rest */
   --cg-active: #f1f0ef;    /* selected nav item, selected rows, round buttons */
   --cg-text-muted: #63635e; /* snippets, dates */
   --cg-text-subtle: #82827c; /* quiet labels in the compose tools */
+  --cg-icon: #464641;      /* icons we draw or recolor (hamburger, menu, back arrow): Gmail's icon grey, warmed to the palette's hue */
   --cg-text: #21201c;      /* primary text */
-  --cg-accent: #ff670d;    /* orange: unread dot and compose buttons */
+  --cg-accent: #ff670d;    /* orange, two meanings only: new (unread dot) and main action (Écrire, Envoyer) */
   --cg-unread-gap: 8px;    /* "Non lus" to dot, and dot to count */
   --cg-compose-size: 44px; /* compose button height; 44px is the minimum comfortable click target */
   --cg-radius: 8px;        /* fields and rows (search bar, email rows); buttons are fully round */
@@ -51,13 +52,16 @@
   --cg-tools-row: 64px;    /* compose: the row with the tools and Send */
   --cg-send-gap: 32px;     /* compose: space between the last tool and Send */
   --cg-hairline: #e9e9e7;  /* compose field dividers, outlines */
-  /* Pastel sunshine tints, only for the new-email edge light */
-  --cg-aurora-lemon: #f5e6ad;   /* pale lemon */
-  --cg-aurora-peach: #f8d3a8;   /* soft peach */
-  --cg-aurora-honey: #f1d49b;   /* honey cream */
-  --cg-aurora-butter: #f6e2a6;  /* butter */
-  --cg-aurora-apricot: #f2bc8c; /* warm apricot */
-  --cg-aurora-cream: #f8edcf;   /* pale cream, the light's start and end */
+  /* Sunlight tints, only for the new-email edge light: all pure yellows
+     (hue 92 to 100 in OKLCH, no orange) */
+  --cg-aurora-lemon: #fbec8f;   /* sunlit lemon */
+  --cg-aurora-straw: #fbe7a4;   /* pale straw */
+  --cg-aurora-honey: #f9de7e;   /* light honey */
+  --cg-aurora-butter: #fde67a;  /* sun yellow */
+  --cg-aurora-golden: #f8d76c;  /* golden yellow */
+  --cg-aurora-cream: #fdf5cf;   /* warm light, the start and end */
+  --cg-aurora-sun: #ffe24a;     /* the sun's core, rising at the bottom */
+  --cg-aurora-gold: #fcd650;    /* the sun's halo */
   /* Sheet curve: no bounce, quick start, long soft landing */
   --cg-ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
   --cg-ease-ui: cubic-bezier(0.2, 0, 0, 1); /* hovers, presses and other quick state changes */
@@ -126,9 +130,8 @@ tr.zA .yi {
   display: none !important;
 }
 
-/* Message list: checkboxes and stars */
-tr.zA > td.oZ-x3,
-tr.zA > td.apU {
+/* Message list: checkboxes (the stars stay, restyled further down) */
+tr.zA > td.oZ-x3 {
   display: none !important;
 }
 
@@ -293,6 +296,52 @@ tr.zA > td.apU {
   filter: grayscale(1);
 }
 
+/* Menu icons as a family of plain shapes, in place of Gmail's: a circle
+   for the inbox, the diamond of starred emails, a triangle pointing out for
+   sent. Drawn at 24px with a 2px stroke, the size and weight of the
+   hamburger and its close icon, in the dark grey of Gmail's icons. Sized
+   by eye, not by measure: pointed shapes cover less area, so the diamond
+   (17px tip to tip) and the triangle (16px tall) are drawn larger than the
+   circle (14px) to look the same size. */
+[role="navigation"] .TO:has(a[href$="#inbox"]) .qj,
+[role="navigation"] .TO:has(a[href$="#starred"]) .qj,
+[role="navigation"] .TO:has(a[href$="#sent"]) .qj {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+[role="navigation"] .TO:has(a[href$="#inbox"]) .qj {
+  background: var(--cg-icon) !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / 24px no-repeat !important;
+  filter: none;
+}
+
+[role="navigation"] .TO:has(a[href$="#sent"]) .qj {
+  background: var(--cg-icon) !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l12.1-7z' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") center / 24px no-repeat !important;
+  filter: none;
+}
+
+[role="navigation"] .TO:has(a[href$="#starred"]) .qj {
+  background: var(--cg-icon) !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.91L19.09 12 12 19.09 4.91 12z' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / 24px no-repeat !important;
+  filter: none;
+}
+
+/* Gmail paints these icons on a layer in front (::before), an image whose
+   dark "current" version showed through the ring; only our shape stays */
+[role="navigation"] .TO:has(a[href$="#inbox"]) .qj::before,
+[role="navigation"] .TO:has(a[href$="#starred"]) .qj::before,
+[role="navigation"] .TO:has(a[href$="#sent"]) .qj::before {
+  display: none !important;
+}
+
+/* The screen you're on: its icon in near-black, the others in the icon
+   grey, no grey circle */
+[role="navigation"] .TO.nZ:has(a) .qj {
+  background: var(--cg-text) !important;
+}
+
 [role="navigation"] .TO .aio {
   position: static !important;
   width: 0 !important;
@@ -317,17 +366,14 @@ tr.zA > td.apU {
 /* Hamburger morphs into a close icon when the menu opens: the top and bottom
    bars rotate into an X and the middle one shrinks away. Both shapes are
    three 4-corner bars on Gmail's 24px grid, so the browser can blend one
-   into the other. It also dims a little while the menu is open. */
+   into the other. The close icon keeps the hamburger's grey. */
 [role="banner"] .gb_ad[role="button"] svg path {
+  fill: var(--cg-icon) !important;
   d: path("M3 6 L21 6 L21 8 L3 8 Z M3 11 L21 11 L21 13 L3 13 Z M3 16 L21 16 L21 18 L3 18 Z");
 }
 
 [role="banner"] .gb_ad[aria-expanded="true"] svg path {
   d: path("M6.343 4.929 L19.071 17.657 L17.657 19.071 L4.929 6.343 Z M12 11 L12 11 L12 13 L12 13 Z M4.929 17.657 L17.657 4.929 L19.071 6.343 L6.343 19.071 Z");
-}
-
-[role="banner"] .gb_ad[aria-expanded="true"] svg {
-  opacity: 0.45;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -397,7 +443,7 @@ tr.zA > td.apU {
   margin: 0 !important;
   background: none !important;
   mask: none !important;
-  color: var(--cg-bg) !important;
+  color: var(--cg-text) !important; /* near-black on orange: 5.6:1 */
   font-size: 14px !important;
   font-weight: 500 !important;
   line-height: 1 !important;
@@ -436,8 +482,55 @@ tr.zA > td.PF {
   display: none !important;
 }
 
+/* The star opens the row at the inset (level with the section headings),
+   with the same gap before the sender */
+tr.zA > td.apU {
+  padding: 0 var(--cg-inset) !important;
+}
+
 tr.zA > td.yX {
-  padding-left: var(--cg-inset) !important;
+  padding-left: 0 !important;
+}
+
+/* Star, drawn as a diamond in our colors instead of Gmail's yellow star
+   image: a 12px diamond (tip to tip), about the size of the capitals of the
+   14px row text, in a 24px click area. An outline in the lightest grey
+   (1.5px, the weight of regular 14px text), filled in near-black once the
+   email is starred (orange is kept for what's new and the main action).
+   Gmail still handles the click. */
+tr.zA td.apU > .T-KT {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+tr.zA td.apU > .T-KT::before {
+  content: "" !important;
+  width: 24px !important;
+  height: 24px !important;
+  opacity: 1 !important;
+  background: var(--cg-text-subtle) !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 7.06L16.94 12 12 16.94 7.06 12z' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  transition: background-color 150ms var(--cg-ease-ui);
+}
+
+/* Hover (and keyboard focus): the outline darkens to near-black, still
+   unfilled;
+   only a starred email gets the filled diamond. No grey circle behind it
+   (Gmail's hover layer, ::after). */
+tr.zA td.apU > .T-KT::after {
+  display: none !important;
+}
+
+tr.zA td.apU > .T-KT.aXw:hover::before,
+tr.zA td.apU > .T-KT.aXw:focus-visible::before {
+  background: var(--cg-text) !important;
+}
+
+/* Starred: Gmail drops the "not starred" class (aXw) and adds one per
+   star type (xj, xk...), so any star without aXw is starred */
+tr.zA td.apU > .T-KT:not(.aXw)::before {
+  background: var(--cg-text) !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 6L18 12 12 18 6 12z'/%3E%3C/svg%3E") !important;
 }
 
 tr.zA > td.xW {
@@ -586,7 +679,7 @@ html:has([role="main"] .ae4 ~ .ae4)::after {
 }
 
 /* More vivid orange on wide-gamut screens (like Mac displays) */
-@supports (color: color(display-p3 1 1 1)) {
+@media (color-gamut: p3) {
   :root {
     --cg-accent: color(display-p3 0.99 0.4 0.02);
   }
@@ -712,8 +805,8 @@ body:has(.dw .Hd[role="dialog"])::before {
 }
 
 /* Close: same size as the hamburger (48px button, 24px icon), in the
-   sheet's top-right corner (concentric with it), with a permanent soft
-   background so it's always easy to find */
+   sheet's top-right corner (concentric with it), bare like the other icon
+   buttons, with the soft grey circle only on hover */
 .dw .Hd[role="dialog"] .aXJ button:last-child {
   position: fixed !important;
   top: var(--cg-sheet-inset) !important;
@@ -721,13 +814,13 @@ body:has(.dw .Hd[role="dialog"])::before {
   width: 48px !important;
   height: 48px !important;
   border-radius: 50% !important;
-  background-color: var(--cg-active) !important;
+  background-color: transparent !important;
   pointer-events: auto !important;
   transition: background-color 150ms var(--cg-ease-ui), scale 150ms var(--cg-ease-ui);
 }
 
 .dw .Hd[role="dialog"] .aXJ button:last-child:hover {
-  background-color: var(--cg-hairline) !important;
+  background-color: var(--cg-hover) !important;
 }
 
 /* Gmail wraps the icon in a 16px box; pin it to the circle's center instead */
@@ -818,11 +911,11 @@ body:has(.dw .Hd[role="dialog"])::before {
 }
 
 /* Send and its schedule arrow: one orange pill, like the compose button,
-   with a faint divider between the two halves */
+   with a faint divider between the two halves; near-black label (5.6:1) */
 .dw .Hd[role="dialog"] .T-I.aoO,
 .dw .Hd[role="dialog"] .T-I.hG {
   background-color: var(--cg-accent) !important;
-  color: var(--cg-bg) !important;
+  color: var(--cg-text) !important;
   box-shadow: none !important;
 }
 
@@ -1091,13 +1184,14 @@ body:has([role="main"] h2.hP) [role="main"] {
   margin: 0 !important;
   padding: 0 !important;
   border-radius: 50% !important;
-  background-color: var(--cg-active) !important;
+  background-color: transparent !important; /* bare like the hamburger below */
   box-shadow: none !important;
   transition: background-color 150ms var(--cg-ease-ui), scale 150ms var(--cg-ease-ui);
 }
 
+/* The soft grey circle only while hovering, like the menu entries */
 [gh="tm"] .T-I.lS:hover {
-  background-color: var(--cg-hairline) !important;
+  background-color: var(--cg-hover) !important;
 }
 
 /* The arrow is drawn here rather than relying on Gmail's icon image, which
@@ -1112,7 +1206,7 @@ body:has([role="main"] h2.hP) [role="main"] {
   display: block !important;
   width: 24px !important;
   height: 24px !important;
-  background-color: var(--cg-text) !important;
+  background-color: var(--cg-icon) !important; /* same grey as the hamburger */
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E") center / contain no-repeat !important;
 }
 
@@ -1134,9 +1228,16 @@ body:has([role="main"] h2.hP) [role="main"] {
   display: none !important;
 }
 
-/* "Se désabonner" in the accent orange */
+/* "Se désabonner": a secondary link, in the secondary grey like the reply
+   buttons, underlined on hover */
 [role="main"] .Ca {
-  color: var(--cg-accent) !important;
+  color: var(--cg-text-muted) !important;
+  text-decoration: none !important;
+}
+
+[role="main"] .Ca:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
 }
 
 /* "Répondre" and "Transférer" under the message: same type as the rest of
@@ -1177,7 +1278,7 @@ body:has([role="main"] h2.hP) [role="main"] {
    pictures don't melt into the page (emoji images excluded) */
 [role="main"] .a3s img:not(.an1),
 [role="main"] img.ajn {
-  outline: 1px solid oklch(0 0 0 / 0.1);
+  outline: 1px solid rgba(0, 0, 0, 0.1);
   outline-offset: -1px;
 }
 
@@ -1374,8 +1475,7 @@ tr.zA {
 
 /* Hover and keyboard selection: Gmail marks the row (.gssb_i) with a flat
    blue-grey fill and a 2px blue bar on its cell. Instead: the soft hover
-   grey across the full width, square, and a straight bar in our orange,
-   drawn inside the row so the text doesn't shift. */
+   grey across the full width, square, like an email row, and no bar. */
 [role="banner"] form[role="search"] tr.gssb_i,
 [role="banner"] form[role="search"] td.gssb_a {
   background-color: transparent !important;
@@ -1383,10 +1483,6 @@ tr.zA {
 
 [role="banner"] form[role="search"] tr.gssb_i > td.gssb_a {
   border-left: none !important;
-}
-
-[role="banner"] form[role="search"] tr.gssb_i [role="option"] {
-  box-shadow: inset 2px 0 0 var(--cg-accent) !important;
 }
 
 [role="banner"] form[role="search"] table.gssb_m [role="option"] {
@@ -1482,9 +1578,10 @@ tr.zA {
   background-color: var(--cg-accent) !important;
 }
 
-/* Selected item in the left navigation */
+/* Selected item in the left navigation: no fill, its icon turns near-black
+   instead (see the menu icons) */
 .TO.nZ {
-  background-color: var(--cg-active) !important;
+  background-color: transparent !important;
 }
 
 .TO.nZ a.J-Ke,
@@ -1601,11 +1698,14 @@ html[data-cg-arriving] [role="main"] tr.zA:not([data-cg-arrived]) {
 
 /* Edge light: a small sunrise. The light comes from the bottom edge and
    rises (the top edges catch it 0.7s later, at about half strength, and let
-   go of it first). Its color warms from pale cream to honey and apricot at
-   the peak, then cools back to cream as it dissolves, while the list comes
+   go of it first). Its color warms from pale cream to honey and golden
+   yellow at the peak, then cools back to cream as it dissolves, while the list comes
    back into focus (FOCUS_MS). Seven seconds in all (SHINE_MS).
-   Four layers built by content.js: a pale and a warm one for the bottom,
-   the same for the top. The color shift is a crossfade between them, and
+   At its heart, a golden sun rises from the bottom center, swells and
+   glows, then sets again.
+   Five layers built by content.js: a pale and a warm one for the bottom,
+   the same for the top, and the sun. The color shift is a crossfade
+   between them, and
    the rise is a slow move, so the graphics card only changes opacity and
    position, never repaints the page. The whole is masked to the edges and
    blends (multiply), so whatever it passes over stays readable, header and
@@ -1644,7 +1744,12 @@ body:has(.dw .Hd[role="dialog"]) > .cg-shine {
   background:
     radial-gradient(50% 60% at 6% 94%, var(--cg-aurora-honey), transparent 75%),
     radial-gradient(50% 45% at 50% 96%, var(--cg-aurora-butter), transparent 75%),
-    radial-gradient(50% 60% at 94% 94%, var(--cg-aurora-apricot), transparent 75%);
+    radial-gradient(50% 60% at 94% 94%, var(--cg-aurora-golden), transparent 75%);
+}
+
+.cg-shine-layer[data-layer="sun"] {
+  background: radial-gradient(34% 44% at 50% 104%, var(--cg-aurora-sun) 0%, var(--cg-aurora-gold) 38%, transparent 76%);
+  transform-origin: 50% 100%;
 }
 
 .cg-shine-layer[data-layer="top-pale"] {
@@ -1656,7 +1761,7 @@ body:has(.dw .Hd[role="dialog"]) > .cg-shine {
 .cg-shine-layer[data-layer="top-warm"] {
   background:
     radial-gradient(50% 55% at 6% 6%, var(--cg-aurora-lemon), transparent 75%),
-    radial-gradient(50% 55% at 94% 6%, var(--cg-aurora-peach), transparent 75%);
+    radial-gradient(50% 55% at 94% 6%, var(--cg-aurora-straw), transparent 75%);
 }
 
 /* Timings in % of 7s: 0.6s = 8.57%, 1s = 14.29%, 2s = 28.57%, 3s = 42.86% */
@@ -1671,6 +1776,7 @@ body:has(.dw .Hd[role="dialog"]) > .cg-shine {
 .cg-shine[data-cg-shining] [data-layer="bottom-warm"] { animation-name: cg-sun-bottom-warm; }
 .cg-shine[data-cg-shining] [data-layer="top-pale"] { animation-name: cg-sun-top-pale; }
 .cg-shine[data-cg-shining] [data-layer="top-warm"] { animation-name: cg-sun-top-warm; }
+.cg-shine[data-cg-shining] [data-layer="sun"] { animation-name: cg-sun-core; }
 
 /* Bottom: pale first, warm at the peak (2s), pale again as it dissolves */
 @keyframes cg-sun-bottom-pale {
@@ -1686,6 +1792,17 @@ body:has(.dw .Hd[role="dialog"]) > .cg-shine {
   28.57% { opacity: 0.85; }
   42.86% { opacity: 0.75; }
   71.43% { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+/* The sun: rises with the warm light, glows brightest at the peak (2s),
+   breathes once, then sets */
+@keyframes cg-sun-core {
+  0%, 5.71% { opacity: 0; }
+  28.57% { opacity: 0.95; }
+  40% { opacity: 0.8; }
+  50% { opacity: 0.9; }
+  78.57% { opacity: 0.15; }
   100% { opacity: 0; }
 }
 
@@ -1711,6 +1828,14 @@ body:has(.dw .Hd[role="dialog"]) > .cg-shine {
   .cg-shine[data-cg-shining] [data-layer="bottom-warm"] { animation-name: cg-sun-bottom-warm, cg-sun-rise; }
   .cg-shine[data-cg-shining] [data-layer="top-pale"] { animation-name: cg-sun-top-pale, cg-sun-drift; }
   .cg-shine[data-cg-shining] [data-layer="top-warm"] { animation-name: cg-sun-top-warm, cg-sun-drift; }
+  .cg-shine[data-cg-shining] [data-layer="sun"] { animation-name: cg-sun-core, cg-sun-arc; }
+}
+
+/* The sun rises and swells, then sinks back a little as it fades */
+@keyframes cg-sun-arc {
+  0% { transform: translateY(14%) scale(0.85); }
+  45% { transform: translateY(0) scale(1.06); }
+  100% { transform: translateY(5%) scale(1); }
 }
 
 @keyframes cg-sun-rise {

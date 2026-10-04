@@ -70,7 +70,7 @@ const SHINE_ATTR = "data-cg-shining";
 // After a light, the next arrivals within 15 seconds only get the blur, so
 // a burst of emails doesn't light the window up again and again
 const SHINE_COOLDOWN_MS = 15000;
-const SHINE_LAYERS = ["bottom-pale", "bottom-warm", "top-pale", "top-warm"];
+const SHINE_LAYERS = ["bottom-pale", "bottom-warm", "sun", "top-pale", "top-warm"];
 let lastShine = -Infinity;
 const ARRIVING_ATTR = "data-cg-arriving"; // on <html>: blurs the other rows
 let shineTimer;
@@ -109,7 +109,7 @@ function minutesAgo(text) {
 }
 
 // The light lives in its own element (a pale and a warm layer for the bottom
-// and for the top), created the first time it's needed
+// and for the top, and the sun), created the first time it's needed
 function shine() {
   // Covers "already lit" too: restarting it would flash
   if (Date.now() - lastShine < SHINE_COOLDOWN_MS) return;
