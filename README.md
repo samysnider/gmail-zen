@@ -6,8 +6,6 @@ It's a personal project, built to make Gmail feel calm and focused.
 
 ![Before and after: Gmail's default inbox, then the same inbox with Gmail Zen](media/before-after.gif)
 
-![Gmail Zen: a new email arriving, the menu, reading, then writing and sending a message](media/demo.gif)
-
 *Both recreated with invented emails.*
 
 ## Design direction
