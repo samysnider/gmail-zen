@@ -1,7 +1,7 @@
 /*
  * Gmail Zen
  *
- * Gmail's class names (like .gb_Md or .T-I) are auto-generated and can change
+ * Gmail's class names (like .gb_Od or .T-I) are auto-generated and can change
  * when Google ships an update. If something reappears, the selector below it
  * probably needs updating.
  *
@@ -71,17 +71,17 @@
 /* ---------- Hidden ---------- */
 
 /* Gmail logo */
-[role="banner"] a.gb_me {
+[role="banner"] a.gb_oe {
   display: none !important;
 }
 
 /* Help, settings, Gemini, upgrade button */
-[role="banner"] .gb_v.gb_Ae {
+[role="banner"] .gb_v.gb_Ce {
   display: none !important;
 }
 
 /* Google apps grid and account avatar */
-[role="banner"] .gb_Md {
+[role="banner"] .gb_Od {
   display: none !important;
 }
 
@@ -121,7 +121,7 @@
 }
 
 /* Search: advanced options button inside the search bar */
-[role="banner"] form[role="search"] button.gb_4e {
+[role="banner"] form[role="search"] button.gb_6e {
   display: none !important;
 }
 
@@ -132,6 +132,21 @@ tr.zA .yi {
 
 /* Message list: checkboxes (the stars stay, restyled further down) */
 tr.zA > td.oZ-x3 {
+  display: none !important;
+}
+
+/* Storage notice above the list ("Informations sur l'espace de stockage") */
+.X3:has(.n9pD7e) {
+  display: none !important;
+}
+
+/* Section options ("⋮") and "show more" beside the section headings */
+[role="main"] .ae4 .Wg .chp5lb {
+  display: none !important;
+}
+
+/* Attachment chips under the subject (file name previews) */
+tr.zA .brd {
   display: none !important;
 }
 
@@ -152,7 +167,7 @@ tr.zA > td.oZ-x3 {
   box-sizing: border-box !important;
 }
 
-[role="banner"] .gb_Td {
+[role="banner"] .gb_Vd {
   max-width: var(--cg-content-width) !important;
   margin: 0 auto !important;
   padding-left: 0 !important;
@@ -162,22 +177,22 @@ tr.zA > td.oZ-x3 {
 /* Hamburger: pinned near the window's left edge (where Gmail had it),
    level with "Non lus". Vertical: space above the header + header row +
    list top space + half the heading's line height, minus half the 48px button. */
-[role="banner"] .gb_ad[role="button"] {
+[role="banner"] .gb_cd[role="button"][aria-expanded] {
   position: fixed !important;
   top: var(--cg-hamburger-top) !important;
   left: var(--cg-hamburger-left) !important;
   margin: 0 !important;
 }
 
-[role="banner"] .gb_2d.gb_Ad,
-[role="banner"] .gb_be {
+[role="banner"] .gb_4d.gb_Cd,
+[role="banner"] .gb_de {
   flex: 0 0 64px !important;
   width: 64px !important;
   min-width: 64px !important;
 }
 
 /* Gmail pads the search area unevenly (10px left, 30px right) */
-[role="banner"] .gb_Te {
+[role="banner"] .gb_Ve {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -367,12 +382,12 @@ tr.zA > td.oZ-x3 {
    bars rotate into an X and the middle one shrinks away. Both shapes are
    three 4-corner bars on Gmail's 24px grid, so the browser can blend one
    into the other. The close icon keeps the hamburger's grey. */
-[role="banner"] .gb_ad[role="button"] svg path {
+[role="banner"] .gb_cd[role="button"][aria-expanded] svg path {
   fill: var(--cg-icon) !important;
   d: path("M3 6 L21 6 L21 8 L3 8 Z M3 11 L21 11 L21 13 L3 13 Z M3 16 L21 16 L21 18 L3 18 Z");
 }
 
-[role="banner"] .gb_ad[aria-expanded="true"] svg path {
+[role="banner"] .gb_cd[aria-expanded="true"] svg path {
   d: path("M6.343 4.929 L19.071 17.657 L17.657 19.071 L4.929 6.343 Z M12 11 L12 11 L12 13 L12 13 Z M4.929 17.657 L17.657 4.929 L19.071 6.343 L6.343 19.071 Z");
 }
 
@@ -392,11 +407,11 @@ tr.zA > td.oZ-x3 {
       scale 150ms var(--cg-ease-ui);
   }
 
-  [role="banner"] .gb_ad[role="button"] svg path {
+  [role="banner"] .gb_cd[role="button"][aria-expanded] svg path {
     transition: d 422ms var(--cg-spring-soft);
   }
 
-  [role="banner"] .gb_ad[role="button"] svg {
+  [role="banner"] .gb_cd[role="button"][aria-expanded] svg {
     transition: opacity 150ms var(--cg-ease-ui);
   }
 
@@ -1371,7 +1386,7 @@ tr.zA {
    advanced options button we hide. It now mirrors the search icon: its
    glyph sits 19px from the bar's right edge, as the magnifying glass does
    from the left edge (measured on the rendered glyphs). */
-[role="banner"] form[role="search"] button.gb_1e {
+[role="banner"] form[role="search"] button.gb_3e {
   left: auto !important;
   right: 7px !important;
   width: 48px !important;
